@@ -8,13 +8,14 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.Module;
 import seedu.address.model.ReadOnlyTrackr;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.Showable;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Student;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends StudentStorage, ModuleStorage, UserPrefsStorage {
+public interface Storage<T extends Showable<T>> extends ShowableStorage<T>, UserPrefsStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -23,21 +24,12 @@ public interface Storage extends StudentStorage, ModuleStorage, UserPrefsStorage
     void saveUserPrefs(ReadOnlyUserPrefs userPrefs) throws IOException;
 
     @Override
-    Path getStudentFilePath();
+    Path getTrackrFilePath();
 
     @Override
-    Optional<ReadOnlyTrackr<Student>> readStudentList() throws DataConversionException, IOException;
+    Optional<ReadOnlyTrackr<T>> readTrackr() throws DataConversionException, IOException;
 
     @Override
-    void saveStudentList(ReadOnlyTrackr<Student> studentList) throws IOException;
-
-    @Override
-    Path getModuleFilePath();
-
-    @Override
-    Optional<ReadOnlyTrackr<Module>> readModuleList() throws DataConversionException, IOException;
-
-    @Override
-    void saveModuleList(ReadOnlyTrackr<Module> moduleList) throws IOException;
+    void saveTrackr(ReadOnlyTrackr<T> trackr) throws IOException;
 
 }

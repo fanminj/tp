@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.Module;
 import seedu.address.model.ReadOnlyTrackr;
+import seedu.address.model.Showable;
 import seedu.address.model.Trackr;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -17,17 +18,18 @@ import seedu.address.model.tag.Tag;
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
-public class SampleDataUtil {
+public class SampleDataUtil<T extends Showable<T>> {
     public static Module[] getSampleModules() {
         return new Module[] {
             new Module("CS2103T")
         };
     }
 
-    public static ReadOnlyTrackr<Module> getSampleModuleList() {
-        Trackr<Module> sampleAb = new Trackr<>();
+    public static <T extends Showable<T>> ReadOnlyTrackr<T> getSampleModuleList() {
+        Trackr<T> sampleAb = new Trackr<>();
         for (Module sampleModule : getSampleModules()) {
-            sampleAb.addObject(sampleModule);
+            T sample = (T) sampleModule;
+            sampleAb.addObject(sample);
         }
         return sampleAb;
     }

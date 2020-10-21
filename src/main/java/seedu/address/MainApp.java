@@ -23,6 +23,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.Module;
 import seedu.address.model.ReadOnlyTrackr;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.Showable;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Student;
 import seedu.address.storage.AddressBookStorage;
@@ -40,16 +41,16 @@ import seedu.address.ui.UiManager;
 /**
  * Runs the application.
  */
-public class MainApp extends Application {
+public class MainApp<T extends Showable<T>> extends Application {
 
     public static final Version VERSION = new Version(0, 6, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     protected Ui ui;
-    protected Logic logic;
+    protected Logic<T> logic;
     protected Storage storage;
-    protected Model model;
+    protected Model<T> model;
     protected Config config;
 
     @Override
@@ -72,9 +73,9 @@ public class MainApp extends Application {
 
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model, storage);
+        logic = new LogicManager<>(model, storage);
 
-        ui = new UiManager(logic);
+        ui = new UiManager<>(logic);
     }
 
     /**
@@ -82,7 +83,7 @@ public class MainApp extends Application {
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
-    private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
+    private Model<T> initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
         /* todo:
         Optional<ReadOnlyTrackr<Student>> studentListOptional;
         ReadOnlyTrackr<Student> initialData;
@@ -101,9 +102,9 @@ public class MainApp extends Application {
         }
          */
 
-        ReadOnlyTrackr<Student> initialData = getSampleStudentList();
+        ReadOnlyTrackr<T> initialData = getSampleModuleList();
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager<>(initialData, userPrefs);
     }
 
     private void initLogging(Config config) {
