@@ -5,17 +5,13 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.person.Student;
 
 /**
  * The API of the Model component.
  */
-public interface Model {
+public interface Model<T extends Showable<T>> {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Module> PREDICATE_SHOW_ALL_MODULES = unused -> true;
-
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Student> PREDICATE_SHOW_ALL_STUDENTS = unused -> true;
+    Predicate<?> PREDICATE_SHOW_ALL_ITEMS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -47,89 +43,46 @@ public interface Model {
      */
     void setTrackrFilePath(Path trackrFilePath);
 
-    // student operations
+    // showable operations
 
     /**
-     * Replaces Trackr data with the data in {@code studentList}.
+     * Replaces Trackr data with the data in {@code showableList}.
      */
-    void setStudentList(ReadOnlyTrackr<Student> studentList);
+    void setShowableList(ReadOnlyTrackr<T> showableList);
 
-    /** Returns the student Trackr */
-    ReadOnlyTrackr<Student> getStudentList();
+    /** Returns the Showable Trackr */
+    ReadOnlyTrackr<T> getShowableList();
 
     /**
-     * Returns true if a student with the same identity as {@code student} exists in trackr.
+     * Returns true if a showable with the same identity as {@code showable} exists in trackr.
      */
-    boolean hasStudent(Student student);
+    boolean hasShowable(T showable);
 
     /**
-     * Deletes the given student.
-     * The student must exist in trackr.
+     * Deletes the given showable.
+     * The showable must exist in trackr.
      */
-    void deleteStudent(Student target);
+    void deleteShowable(T target);
 
     /**
-     * Adds the given student.
-     * {@code student} must not already exist in trackr.
+     * Adds the given showable.
+     * {@code showable} must not already exist in trackr.
      */
-    void addStudent(Student student);
+    void addShowable(T showable);
 
     /**
-     * Replaces the given student {@code target} with {@code editedStudent}.
+     * Replaces the given showable {@code target} with {@code editedShowable}.
      * {@code target} must exist in trackr.
-     * The student identity of {@code editedStudent} must not be the same as another existing student in trackr.
+     * The showable identity of {@code editedShowable} must not be the same as another existing showable in trackr.
      */
-    void setStudent(Student target, Student editedStudent);
+    void setShowable(T target, T editedStudent);
 
-    /** Returns an unmodifiable view of the filtered student list */
-    ObservableList<Student> getFilteredStudentList();
+    /** Returns an unmodifiable view of the filtered showable list */
+    ObservableList<T> getFilteredShowableList();
 
     /**
-     * Updates the filter of the filtered student list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered showable list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredStudentList(Predicate<Student> predicate);
-
-    // module operations
-
-    /**
-     * Replaces Trackr data with the data in {@code moduleList}.
-     */
-    void setModuleList(ReadOnlyTrackr<Module> moduleList);
-
-    /** Returns the module Trackr */
-    ReadOnlyTrackr<Module> getModuleList();
-
-    /**
-     * Returns true if a module with the same identity as {@code module} exists in trackr.
-     */
-    boolean hasModule(Module module);
-
-    /**
-     * Deletes the given module.
-     * The module must exist in trackr.
-     */
-    void deleteModule(Module target);
-
-    /**
-     * Adds the given module.
-     * {@code module} must not already exist in trackr.
-     */
-    void addModule(Module module);
-
-    /**
-     * Replaces the given module {@code target} with {@code editedModule}.
-     * {@code target} must exist in trackr.
-     * The module identity of {@code editedModule} must not be the same as another existing module in trackr.
-     */
-    void setModule(Module target, Module editedModule);
-
-    /** Returns an unmodifiable view of the filtered module list */
-    ObservableList<Module> getFilteredModuleList();
-
-    /**
-     * Updates the filter of the filtered module list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredModuleList(Predicate<Module> predicate);
+    void updateFilteredShowableList(Predicate<T> predicate);
 }

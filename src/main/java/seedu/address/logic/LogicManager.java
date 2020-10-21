@@ -13,15 +13,14 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.Module;
 import seedu.address.model.ReadOnlyTrackr;
-import seedu.address.model.person.Student;
+import seedu.address.model.Showable;
 import seedu.address.storage.Storage;
 
 /**
  * The main LogicManager of the app.
  */
-public class LogicManager implements Logic {
+public class LogicManager<T extends Showable<T>> implements Logic<T> {
     public static final String FILE_OPS_ERROR_MESSAGE = "Could not save data to file: ";
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
@@ -47,7 +46,7 @@ public class LogicManager implements Logic {
         commandResult = command.execute(model);
 
         try {
-            storage.saveModuleList(model.getModuleList());
+            storage.saveModuleList(model.getShowableList());
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }
@@ -56,23 +55,13 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ReadOnlyTrackr<Student> getStudentList() {
-        return model.getStudentList();
+    public ReadOnlyTrackr<T> getShowableList() {
+        return model.getShowableList();
     }
 
     @Override
-    public ObservableList<Student> getFilteredStudentList() {
-        return model.getFilteredStudentList();
-    }
-
-    @Override
-    public ReadOnlyTrackr<Module> getModuleList() {
-        return model.getModuleList();
-    }
-
-    @Override
-    public ObservableList<Module> getFilteredModuleList() {
-        return model.getFilteredModuleList();
+    public ObservableList<T> getFilteredShowableList() {
+        return model.getFilteredShowableList();
     }
 
     @Override

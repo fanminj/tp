@@ -6,4 +6,6 @@ package seedu.address.model;
  */
 public interface Showable<T> {
     boolean isSame(T other);
+
+    String getType();
 }

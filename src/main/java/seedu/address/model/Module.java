@@ -103,6 +103,11 @@ public class Module implements Showable<Module> {
     }
 
     @Override
+    public String getType() {
+        return "module";
+    }
+
+    @Override
     public String toString() {
         return getModuleId();
     }

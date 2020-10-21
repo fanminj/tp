@@ -10,12 +10,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.Module;
 import seedu.address.model.ReadOnlyTrackr;
+import seedu.address.model.Showable;
 import seedu.address.model.person.Student;
 
 /**
  * API of the Logic component
  */
-public interface Logic {
+public interface Logic<T extends Showable<T>> {
     /**
      * Executes the command and returns the result.
      * @param commandText The command as entered by the user.
@@ -26,24 +27,14 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /**
-     * Returns the student list.
+     * Returns the showable list.
      *
-     * @see Model#getStudentList()
+     * @see Model#getShowableList()
      */
-    ReadOnlyTrackr<Student> getStudentList();
+    ReadOnlyTrackr<T> getShowableList();
 
-    /** Returns an unmodifiable view of the filtered list of students */
-    ObservableList<Student> getFilteredStudentList();
-
-    /**
-     * Returns the module list.
-     *
-     * @see Model#getModuleList()
-     */
-    ReadOnlyTrackr<Module> getModuleList();
-
-    /** Returns an unmodifiable view of the filtered list of modules */
-    ObservableList<Module> getFilteredModuleList();
+    /** Returns an unmodifiable view of the filtered list of showables */
+    ObservableList<T> getFilteredShowableList();
 
     /**
      * Returns the user prefs' trackr file path.

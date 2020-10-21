@@ -46,6 +46,10 @@ public class Student extends Person implements Showable<Student> {
                 && otherStudent.getStudentId().equals(getStudentId());
     }
 
+    public String getType() {
+        return "student";
+    }
+
     /**
      * Returns true if both students have the same identity and data fields.
      * This defines a stronger notion of equality between two students.

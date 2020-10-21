@@ -30,11 +30,11 @@ public class AddModuleCommand extends Command {
         requireNonNull(model);
 
         // TODO implement after changing model and addressbook class
-        if (model.hasModule(toAdd)) {
+        if (model.hasShowable(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_MODULE);
         }
 
-        model.addModule(toAdd);
+        model.addShowable(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
