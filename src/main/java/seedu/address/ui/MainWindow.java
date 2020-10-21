@@ -16,22 +16,23 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Showable;
 
 /**
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
  */
-public class MainWindow extends UiPart<Stage> {
+public class MainWindow<T extends Showable<T>> extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
     private Stage primaryStage;
-    private Logic logic;
+    private Logic<T> logic;
 
     // Independent Ui parts residing in this Ui container
-    private ModuleListPanel moduleListPanel;
+    private ShowableListPanel<T> showableListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -53,7 +54,7 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
-    public MainWindow(Stage primaryStage, Logic logic) {
+    public MainWindow(Stage primaryStage, Logic<T> logic) {
         super(FXML, primaryStage);
 
         // Set dependencies
@@ -110,8 +111,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        moduleListPanel = new ModuleListPanel(logic.getFilteredShowableList());
-        moduleListPanelPlaceholder.getChildren().add(moduleListPanel.getRoot());
+        showableListPanel = new ShowableListPanel<>(logic.getFilteredShowableList());
+        moduleListPanelPlaceholder.getChildren().add(showableListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -163,8 +164,8 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    public ModuleListPanel getModuleListPanel() {
-        return moduleListPanel;
+    public ShowableListPanel<T> getShowableListPanel() {
+        return showableListPanel;
     }
 
     /**

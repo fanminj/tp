@@ -101,7 +101,7 @@ public class MainApp extends Application {
         }
          */
 
-        ReadOnlyTrackr<Module> initialData = getSampleModuleList();
+        ReadOnlyTrackr<Student> initialData = getSampleStudentList();
 
         return new ModelManager(initialData, userPrefs);
     }

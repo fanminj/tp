@@ -24,14 +24,14 @@ public class LogicManager<T extends Showable<T>> implements Logic<T> {
     public static final String FILE_OPS_ERROR_MESSAGE = "Could not save data to file: ";
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
-    private final Model model;
+    private final Model<T> model;
     private final Storage storage;
     private final AddressBookParser addressBookParser; //This is ModuleListParser, for simplicity I did not change it
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
      */
-    public LogicManager(Model model, Storage storage) {
+    public LogicManager(Model<T> model, Storage storage) {
         this.model = model;
         this.storage = storage;
         addressBookParser = new AddressBookParser();
@@ -45,11 +45,11 @@ public class LogicManager<T extends Showable<T>> implements Logic<T> {
         Command command = addressBookParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
-        try {
-            storage.saveModuleList(model.getShowableList());
-        } catch (IOException ioe) {
-            throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
-        }
+//        try {
+//            storage.saveModuleList(model.getShowableList());
+//        } catch (IOException ioe) {
+//            throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
+//        }
 
         return commandResult;
     }
